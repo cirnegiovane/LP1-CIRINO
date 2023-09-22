@@ -7,7 +7,7 @@ duplas para os dois jogadores, ganha o jogador com a dupla maior. A disputa é e
 Indique o jogador vencedor ou se houve empate.*/
 
 #include <stdio.h>
-#define N 20
+#define N 11
 int max(int x,int y);
 int main() {
     srand(time(NULL));    
