@@ -52,7 +52,7 @@ int main(){
                 char cod1[10];
                 printf("Digite o codigo do produto: ");
                 fgets(cod1, sizeof(cod1), stdin);
-                localizar(tabela,cod);
+                localizar(tabela,cod1);
                 break;
             case 3:
 
@@ -91,7 +91,6 @@ int main(){
                 gerarcliente();
                 break;
             case 10:
-
                 z = getchar();
                 char data[10];
                 printf("Total arrecadado em qual data?");
