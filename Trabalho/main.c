@@ -32,9 +32,9 @@ int main(){
     Pedido pedido;
     Cliente cliente;
     Produto produto;
-    arqproduto = fopen("produto.dat","wb");
-    arqcliente = fopen("cliente.dat","wb");
-    arqpedido = fopen("pedido.dat","wb");
+    arqproduto = fopen("produto.dat","ab");
+    arqcliente = fopen("cliente.dat","ab");
+    arqpedido = fopen("pedido.dat","ab");
     int sair = 0;
     int v,c,x,z,b;
     while(!sair){
