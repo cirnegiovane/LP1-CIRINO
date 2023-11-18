@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#define tam 100
 typedef struct {
     char cod[10];
     char nome[40];
@@ -26,83 +27,88 @@ typedef struct {
     char data[11];
 }Pedido;
 
-
+void cadastrarprod();
+void carregartabela(Produto *tabela[]);
+void listartabela(Produto tabela[]);
 int main(){
-    FILE *arqproduto,*arqcliente,*arqpedido;
-    Pedido pedido;
-    Cliente cliente;
-    Produto produto;
-    arqproduto = fopen("produto.dat","ab");
-    arqcliente = fopen("cliente.dat","ab");
-    arqpedido = fopen("pedido.dat","ab");
     int sair = 0;
-    int v,c,x,z,b;
+    int quantprod = 0;
+    Produto tabela[100];
     while(!sair){
-        printf("O que gostaria de fazer?\n1.  Carregar Arquivo de Produtos em um vetor  chamado Tabela;\n2.  Localizar Produto na Tabela;\n3.  Inserir Ordenadamente (pelo codigo) um Produto na Tabela; \n4.  Remover Produto da Tabela; \n5.  Modificar Informações sobre um Produto na Tabela; \n6.  Listar Tabela no Vídeo; \n7.  Listar os dados de um cliente juntamente com os seus pedidos; \n8.  Processar a venda para um Cliente : Gerar a Nota Fiscal das Compras (no vídeo) e salvar o \npedido no arquivo de Pedidos; \n9.  Gerar Cliente: Abrir o Arquivo do Cliente e preencher, via teclado, os campos do Arquivo \nCliente e salvá-los depois; \n10. Listar  Mensagem  sobre  o  Total  Arrecadado  pelo  Supermercado  e  o  Número  de  Itens \nVendidos em um dia qualquer; (atenco quanto a restrição para datas futuras) \n11. Menu.");
+        printf("O que gostaria de fazer?\n1. Carregar Arquivo de Produtos em um vetor chamado Tabela;\n2. Localizar Produto na Tabela;\n3. Inserir Ordenadamente (pelo codigo) um Produto na Tabela; \n4. Remover Produto da Tabela; \n5. Modificar Informações sobre um Produto na Tabela; \n6. Listar Tabela no Vídeo; \n7. Listar os dados de um cliente juntamente com os seus pedidos; \n8. Processar a venda para um Cliente : Gerar a Nota Fiscal das Compras (no vídeo) e salvar o pedido no arquivo de Pedidos; \n9. Gerar Cliente: Abrir o Arquivo do Cliente e preencher, via teclado, os campos do Arquivo Cliente e salvá-los depois; \n10. Listar  Mensagem  sobre  o  Total  Arrecadado  pelo  Supermercado  e  o  Número  de  Itens Vendidos em um dia qualquer; (atencao quanto a restrição para datas futuras) \n11. Menu.\n");
         int escolha;
         scanf("%d", &escolha);
-
-        switch (escolha) {
+        switch (escolha)
+        {
+        case -1:
+            sair = 1;
+            break;
+        case 1:{
+            printf("Importante: para carregar o vetor com os produtos, eh preciso ter cadastrado ao menos um produto. Deseja cadastrar?\n1- sim\n2- nao\n");
+            int escolha1;
+            scanf("%d",&escolha1);
+            switch (escolha1)
+            {
             case 1:
-                Produto tabela[15];
+                cadastrarprod();
+                carregartabela(tabela);
+                printf("Vetor carregado!\n");
                 break;
             case 2:
-
-                v = getchar();
-                char cod1[10];
-                printf("Digite o codigo do produto: ");
-                fgets(cod1, sizeof(cod1), stdin);
-                localizar(tabela,cod1);
-                break;
-            case 3:
-
-                c = getchar();
-                printf("Digite o codigo do produto: ");
-                char cod2[10];
-                fgets(cod2, sizeof(cod2), stdin);
-                inserir(tabela,cod2);
-                break;
-            case 4:
-                b = getchar();
-                printf("Digite o codigo do produto: ");
-                char cod3[10];
-                fgets(cod3, sizeof(cod2), stdin);
-                remover(tabela,cod3);
-                break;
-            case 5:
-                // Implemente o código para a opção 5 (modificar informações sobre um produto)
-                break;
-            case 6:
-                listar(tabela);
-                // Implemente o código para a opção 6 (listar tabela no vídeo)
-                break;
-            case 7:
-
-                x = getchar();
-                char cod4[10];
-                printf("Digite o codigo do cliente: ");
-                fgets(cod4, sizeof(cod4), stdin);
-                dados(cod4);
-                break;
-            case 8:
-                processar();
-                break;
-            case 9:
-                gerarcliente();
-                break;
-            case 10:
-                z = getchar();
-                char data[10];
-                printf("Total arrecadado em qual data?");
-                fgets(data, sizeof(data), stdin);
-                total(data);
-                break;
-            case 11:
-                sair = 1;
+                carregartabela(tabela);
+                printf("Vetor carregado!\n");
                 break;
             default:
-                printf("Opção inválida. Tente novamente.\n");
+                break;
+            }
+            break;
+        }
+        case 6:{
+            listartabela(tabela);
+            break;
+        }
+        default:
+            break;
         }
     }
     return 0;
+}
+void cadastrarprod(){
+    scanf("%*c");
+    FILE *arqprod = fopen("produto.dat","wb");
+    Produto c;
+    if(arqprod){
+        printf("Digite o codigo do produto: ");
+        fgets(c.cod,10,stdin);
+        printf("Digite o nome do produto: ");
+        fgets(c.nome,40,stdin);
+        printf("Digite o preco do produto: ");
+        scanf("%f",&c.preco);
+        fwrite(&c,sizeof(Produto),1,arqprod);
+        printf("Produto cadastrado com sucesso.\n");
+    }else{
+        printf("Falha ao abrir arquivo de produtos.\n");
+    }
+    fclose(arqprod);
+}
+
+void carregartabela(Produto *tabela[]){
+    int i = 0;
+    FILE *arqprod = fopen("produto.dat","wb");
+    Produto c;
+    while(fread(&c,sizeof(c),1,arqprod)){
+        strcpy(tabela[i]->cod, c.cod);
+        strcpy(tabela[i]->nome, c.nome);
+        tabela[i]->preco = c.preco;
+        i++;
+    }
+}
+
+void listartabela(Produto tabela[]){
+    for(int i=0;i<tam;i++){
+        printf("Produto %d:\n",i+1);
+        printf("Codigo: %s.\n",tabela[i].cod);
+        printf("Nome: %s.\n",tabela[i].nome);
+        printf("Preco: %.2f.\n",tabela[i].preco);
+    }
 }

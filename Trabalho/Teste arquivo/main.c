@@ -16,6 +16,7 @@ int qtdReg(char arquivo[]);
 
 int main (){
     char arq[] = {"pessoas.dat"};
+    
     int k=0;
     int tam = qtdReg(arq);
     Pessoa *c = malloc(tam*sizeof(Pessoa));
@@ -108,12 +109,21 @@ void escrever(char arquivo[]){
 void ler(char arquivo[]){
     Pessoa c;
     FILE *file = fopen(arquivo,"rb");
+    FILE *arq2;
+    arq2 = fopen("C:\\Users\\canal\\OneDrive\\Documentos\\UERJ\\LP1 CIRINO\\Trabalho\\teste.txt","ab");
     if(file){
         while(fread(&c,sizeof(Pessoa),1,file)){
             printf("\nNome: %s.\nNascimento: %d/%d/%d.\n",c.nome,c.dia,c.mes,c.ano);
+            printf("\n");
+            fclose(file);
+            if(arq2){
+                fwrite(&c,sizeof(Pessoa),1,arq2);
+                fclose(arq2);
+            }else{
+                printf("ERRO AO ABRIR TXT");
+            }
         }
-        printf("\n");
-        fclose(file);
+        
     }else{
         printf("\nErro ao abrir o arquivo, verifique se ja cadastrou alguem!\n");
     }
