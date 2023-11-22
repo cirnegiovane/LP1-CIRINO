@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": ".",
-      "program": "build/Debug/outDebug",
+      "cwd": "c:/Users/canal/OneDrive/Documentos/UERJ/LP1 CIRINO/Trabalho",
+      "program": "c:/Users/canal/OneDrive/Documentos/UERJ/LP1 CIRINO/Trabalho/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
